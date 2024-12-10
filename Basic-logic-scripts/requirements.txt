@@ -1,0 +1,6 @@
+pix2tex
+Pillow
+pydantic
+matplotlib
+sympy
+
