@@ -4,3 +4,6 @@ pydantic
 matplotlib
 sympy
 django
+requests 
+beautifulsoup4
+PyMuPDF
