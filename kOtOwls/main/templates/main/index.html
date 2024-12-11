@@ -67,6 +67,10 @@
             resize: none;
         }
 
+        .input-form input[type="file"] {
+            margin-top: 10px;
+        }
+
         .input-form button {
             padding: 10px 20px;
             margin-top: 10px;
@@ -88,6 +92,21 @@
             background-color: #e0e0e0;
             border-radius: 5px;
             font-size: 16px;
+        }
+
+        /* Стили для блока с изображением */
+        .image-output {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .latex-formula {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            font-size: 18px;
+            text-align: center;
         }
     </style>
 </head>
@@ -111,7 +130,7 @@
     <!-- Основной контент -->
     <div class="main-content">
         <h1>Введите ваш текст</h1>
-        <form method="POST" class="input-form">
+        <form method="POST" class="input-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Отправить</button>
@@ -121,6 +140,19 @@
         <div class="output-text">
             <h2>Вы ввели:</h2>
             <p>{{ text }}</p>
+        </div>
+        {% endif %}
+
+        {% if image_url %}
+        <div class="image-output">
+            <h2>Загруженное изображение:</h2>
+            <img src="{{ image_url }}" alt="Загруженное изображение" width="300">
+        </div>
+        {% endif %}
+
+        {% if latex_text %}
+        <div class="latex-formula">
+            <p>{{ latex_text }}</p>
         </div>
         {% endif %}
     </div>
