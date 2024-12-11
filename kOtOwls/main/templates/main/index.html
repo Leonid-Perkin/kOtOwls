@@ -80,6 +80,15 @@
         .input-form button:hover {
             background-color: #577f9a;
         }
+
+        /* Стили для возвращенного текста */
+        .output-text {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -102,10 +111,18 @@
     <!-- Основной контент -->
     <div class="main-content">
         <h1>Введите ваш текст</h1>
-        <form class="input-form">
-            <textarea placeholder="Введите ваш текст здесь..."></textarea>
+        <form method="POST" class="input-form">
+            {% csrf_token %}
+            {{ form.as_p }}
             <button type="submit">Отправить</button>
         </form>
+
+        {% if text %}
+        <div class="output-text">
+            <h2>Вы ввели:</h2>
+            <p>{{ text }}</p>
+        </div>
+        {% endif %}
     </div>
 
 </body>
