@@ -4,17 +4,21 @@ from PIL import Image
 from pix2tex.cli import LatexOCR
 import warnings
 import logging
-warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
+
+warnings.filterwarnings("ignore", category="UserWarning", module="pydantic")
 warnings.filterwarnings("ignore")
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 os.environ["PYTHONWARNINGS"] = "ignore"
 logging.getLogger("pydantic").setLevel(logging.CRITICAL)
+
 def extract_latex_from_image(image_path):
     """Извлечение формулы в формате LaTeX с изображения с помощью pix2tex."""
     try:
         model = LatexOCR()
         image = Image.open(image_path).convert('RGB')
         latex_formula = model(image)
+        if not latex_formula.strip().startswith("\\begin{array}"):
+            latex_formula = f"\\begin{{equation}}\n{latex_formula}\n\\end{{equation}}"
         return latex_formula
     except Exception as e:
         print(f"Ошибка при обработке изображения: {e}")
@@ -27,7 +31,8 @@ def main():
     if not latex_formula:
         print("Не удалось извлечь формулу из изображения.")
         return
-    print(f"Формула в формате LaTeX: {latex_formula}")
+    print("\nФормула в формате LaTeX:")
+    print(latex_formula)
 
 if __name__ == "__main__":
     main()
