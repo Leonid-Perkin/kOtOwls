@@ -1,0 +1,104 @@
+<style>
+    /* Убираем отступы по умолчанию */
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Стили для хедера */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #6997CB; /* Фон хедера */
+    }
+
+    /* Стили для логотипа */
+    .logo img {
+        height: 30px; /* Размер логотипа */
+    }
+
+    /* Стили для меню */
+    nav {
+        display: flex;
+    }
+
+    /* Стили для элементов меню */
+    nav a {
+        color: #fff; /* Белый текст */
+        text-decoration: none;
+        margin-right: 3px; /* Отступ между элементами меню */
+        font-size: 18px;
+    }
+
+    /* Стили для наведения */
+    nav a:hover {
+        text-decoration: underline;
+    }
+
+    /* Стили для основного контента */
+    .main-content {
+        padding: 20px;
+        background-color: #f4f4f4;
+        margin-top: 20px;
+    }
+
+    /* Стили для формы ввода текста */
+    .input-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-form textarea {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        resize: none;
+    }
+
+    .input-form input[type="file"] {
+        margin-top: 10px;
+    }
+
+    .input-form button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #6997CB;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .input-form button:hover {
+        background-color: #577f9a;
+    }
+
+    /* Стили для возвращенного текста */
+    .output-text {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    /* Стили для блока с изображением */
+    .image-output {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .latex-formula {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        font-size: 18px;
+        text-align: center;
+    }
+</style>

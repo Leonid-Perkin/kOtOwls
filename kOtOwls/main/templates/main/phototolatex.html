@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+<script id="MathJax-script" async src="{% static 'main/mathJax/tex-chtml.js' %}"></script>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -10,27 +11,21 @@
 <body>
     {% include 'main/headermenu.html'%}
     <div class="main-content">
-        <h1>Введите ваш текст</h1>
+        <h1>Загрузите ваше фото</h1>
         <form method="POST" class="input-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Отправить</button>
         </form>
-        {% if text %}
-        <div class="output-text">
-            <h2>Вы ввели:</h2>
-            <p>{{ text }}</p>
-        </div>
-        {% endif %}
         {% if image_url %}
         <div class="image-output">
-            <h2>Загруженное изображение:</h2>
+            <h2>Загруженное фото:</h2>
             <img src="{{ image_url }}" alt="Загруженное изображение" width="300">
         </div>
         {% endif %}
         {% if latex_text %}
         <div class="latex-formula">
-            <p>{{ latex_text }}</p>
+            <p>Latex: {{ latex_text }}</p>
         </div>
         {% endif %}
     </div>
