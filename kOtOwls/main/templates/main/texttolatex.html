@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kOtOwls</title>
     {% include 'main/stylehtm.html'%}
+    <script id="MathJax-script" async src="{% static 'main/mathJax/tex-chtml.js' %}"></script>
 </head>
 <body>
     {% include 'main/headermenu.html'%}
@@ -20,17 +21,6 @@
         <div class="output-text">
             <h2>Вы ввели:</h2>
             <p>{{ text }}</p>
-        </div>
-        {% endif %}
-        {% if image_url %}
-        <div class="image-output">
-            <h2>Загруженное изображение:</h2>
-            <img src="{{ image_url }}" alt="Загруженное изображение" width="300">
-        </div>
-        {% endif %}
-        {% if latex_text %}
-        <div class="latex-formula">
-            <p>{{ latex_text }}</p>
         </div>
         {% endif %}
     </div>

@@ -5,7 +5,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index),
-    path('phototolatex/', views.phototolatex)
+    path('phototolatex/', views.phototolatex),
+    path('texttolatex/', views.texttolatex)
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
