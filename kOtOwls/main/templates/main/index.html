@@ -5,34 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kOtOwls</title>
-    {% include 'main/stylehtm.html'%}
+    {% include 'main/stylehtm.html' %}
 </head>
 <body>
-    {% include 'main/headermenu.html'%}
+    {% include 'main/headermenu.html' %}
     <div class="main-content">
-        <h1>Введите ваш текст</h1>
-        <form method="POST" class="input-form" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Отправить</button>
-        </form>
-        {% if text %}
+        <h1>O LaTeX:</h1>
         <div class="output-text">
-            <h2>Вы ввели:</h2>
-            <p>{{ text }}</p>
+            <h2>
+                LaTeX — наиболее популярный набор макрорасширений (или макропакет) системы компьютерной вёрстки TeX, который облегчает набор сложных документов. В типографском наборе системы TeX форматируется традиционно как LAΤΕΧ.
+                Пакет позволяет автоматизировать многие задачи набора текста и подготовки статей, включая набор текста на нескольких языках, нумерацию разделов и формул, перекрёстные ссылки, размещение иллюстраций и таблиц на странице, ведение библиографии и др. Кроме базового набора существует множество пакетов расширения LaTeX.
+                Общий внешний вид документа в LaTeX определяется стилевым файлом. Существует несколько стандартных стилевых файлов для статей, книг, писем и т. д., кроме того, многие издательства и журналы предоставляют свои собственные стилевые файлы, что позволяет быстро оформить публикацию, соответствующую стандартам издания.
+            </h2>
         </div>
-        {% endif %}
-        {% if image_url %}
         <div class="image-output">
-            <h2>Загруженное изображение:</h2>
-            <img src="{{ image_url }}" alt="Загруженное изображение" width="300">
+            <h2>Пример работы LaTeX</h2>
+            <img src="{% static 'main/images/latextranslate.png' %}" alt="Загруженное изображение" width="600">
         </div>
-        {% endif %}
-        {% if latex_text %}
-        <div class="latex-formula">
-            <p>{{ latex_text }}</p>
-        </div>
-        {% endif %}
     </div>
 </body>
 </html>

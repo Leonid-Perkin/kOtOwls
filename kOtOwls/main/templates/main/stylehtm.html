@@ -5,17 +5,23 @@
         padding: 0;
     }
 
+    /* Общие стили */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
     /* Стили для хедера */
     header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #6997CB; /* Фон хедера */
+        padding: 10px 20px;
     }
 
     /* Стили для логотипа */
     .logo img {
-        height: 30px; /* Размер логотипа */
+        height: 50px; /* Размер логотипа */
     }
 
     /* Стили для меню */
@@ -27,8 +33,8 @@
     nav a {
         color: #fff; /* Белый текст */
         text-decoration: none;
-        margin-right: 3px; /* Отступ между элементами меню */
-        font-size: 18px;
+        margin-right: 15px; /* Отступ между элементами меню */
+        font-size: 20px;
     }
 
     /* Стили для наведения */
@@ -39,7 +45,7 @@
     /* Стили для основного контента */
     .main-content {
         padding: 20px;
-        background-color: #f4f4f4;
+        background-color: #E0F1FF;
         margin-top: 20px;
     }
 
@@ -49,24 +55,24 @@
         flex-direction: column;
     }
 
+    .input-form textarea,
+    .input-form input[type="file"],
+    .input-form button {
+        margin-top: 10px;
+    }
+
     .input-form textarea {
         width: 100%;
         height: 150px;
         padding: 10px;
-        margin-top: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 16px;
         resize: none;
     }
 
-    .input-form input[type="file"] {
-        margin-top: 10px;
-    }
-
     .input-form button {
         padding: 10px 20px;
-        margin-top: 10px;
         background-color: #6997CB;
         color: white;
         border: none;
@@ -79,26 +85,24 @@
     }
 
     /* Стили для возвращенного текста */
-    .output-text {
+    .output-text,
+    .latex-formula {
         margin-top: 20px;
-        padding: 10px;
-        background-color: #e0e0e0;
-        border-radius: 5px;
+        padding: 20px;
+        background-color: #FFFFFF;
+        border-radius: 15px;
         font-size: 16px;
+        text-align: center;
+    }
+
+    .latex-formula {
+        border: 1px solid #ccc;
+        font-size: 20px;
     }
 
     /* Стили для блока с изображением */
     .image-output {
         margin-top: 20px;
-        text-align: center;
-    }
-
-    .latex-formula {
-        margin-top: 20px;
-        padding: 10px;
-        background-color: #f0f0f0;
-        border: 1px solid #ccc;
-        font-size: 18px;
         text-align: center;
     }
 </style>
