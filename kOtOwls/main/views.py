@@ -84,7 +84,6 @@ def texttolatex(request):
     if request.method == "POST":
         form = TextInputForm(request.POST)
         if form.is_valid():
-            text = form.cleaned_data['text']
             text = to_latex(form.cleaned_data['text'])
     else:
         form = TextInputForm()
