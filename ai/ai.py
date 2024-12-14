@@ -67,8 +67,15 @@ def normalize_formula(formula_str):
     Преобразует строку формулы в математическое выражение SymPy.
     """
     try:
+        # Очищаем строку формулы перед нормализацией
         cleaned_formula = clean_formula(formula_str)
-        expr = sp.sympify(cleaned_formula)
+        
+        # Определяем символы (переменные) для формулы
+        variables = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        symbols = sp.symbols(variables)
+        
+        # Преобразуем очищенную формулу в выражение SymPy
+        expr = sp.sympify(cleaned_formula, locals={var: symbol for var, symbol in zip(variables, symbols)})
         return expr
     except Exception as e:
         print(f"Ошибка нормализации формулы: {e}")

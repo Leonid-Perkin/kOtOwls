@@ -22,13 +22,5 @@
     {
         "id": 6,
         "formula": "x * y"
-    },
-    {
-        "id": 7,
-        "formula": "sqrt(a**2 + b**2)"
-    },
-    {
-        "id": 8,
-        "formula": "sqrt(x**2 + y**2)"
     }
 ]
