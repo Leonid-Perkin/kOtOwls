@@ -9,3 +9,8 @@ beautifulsoup4
 PyMuPDF
 tensorflow
 numpy
+torch 
+transformers 
+datasets
+tf-keras
+transformers[torch]
