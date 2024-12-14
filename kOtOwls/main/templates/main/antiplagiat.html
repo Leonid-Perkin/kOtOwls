@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kOtOwls</title>
-    {% include 'main/stylehtm.html'%}
+    {% include 'main/stylehtm.html' %}
     <script id="MathJax-script" async src="{% static 'main/mathJax/tex-chtml.js' %}"></script>
 </head>
 <body>
-    {% include 'main/headermenu.html'%}
+    {% include 'main/headermenu.html' %}
     <div class="main-content">
+
+        <!-- Форма для ввода текста -->
         <h1>Введите ваш текст</h1>
         <form method="POST" class="input-form" enctype="multipart/form-data">
             {% csrf_token %}
@@ -23,6 +25,48 @@
             <p>{{ text }}</p>
         </div>
         {% endif %}
+
+        <!-- Форма для загрузки изображения -->
+        <h1>Загрузите ваше фото</h1>
+        <form method="POST" class="input-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Отправить</button>
+        </form>
+        {% if image_url %}
+        <div class="image-output">
+            <h2>Загруженное фото:</h2>
+            <img src="{{ image_url }}" alt="Загруженное изображение" width="500">
+        </div>
+        {% endif %}
+        {% if latex_text %}
+        <div class="latex-formula">
+            <p>Latex: {{ latex_text }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Блок для отображения результатов проверки оригинальности -->
+        {% if max_similarity_difflib and max_similarity_nn %}
+        <div class="similarity-output">
+            <h2>Результаты проверки оригинальности:</h2>
+            <p><strong>Метод difflib - Максимальное сходство:</strong> {{ max_similarity_difflib|floatformat:2 }}%</p>
+            <p><strong>Формула, наиболее похожая (difflib):</strong> {{ most_similar_formula_difflib }}</p>
+            <p><strong>Метод нейросети - Максимальное сходство:</strong> {{ max_similarity_nn|floatformat:2 }}%</p>
+            <div class="similarity-bar">
+                <p><strong>Процент сходства (difflib):</strong> {{ max_similarity_difflib|floatformat:2 }}%</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: {{ max_similarity_difflib }}%;"></div>
+                </div>
+            </div>
+            <div class="similarity-bar">
+                <p><strong>Процент сходства (нейросеть):</strong> {{ max_similarity_nn|floatformat:2 }}%</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: {{ max_similarity_nn }}%;"></div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
     </div>
 </body>
 </html>

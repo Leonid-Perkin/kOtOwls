@@ -46,17 +46,42 @@ def preprocess_expression(expression):
     expression = expression.replace('^', '**').strip()
     return expression
 
-def to_latex(expression):
-    transformations = (standard_transformations + (implicit_multiplication_application,))
+def text_to_latex(input_text):
+    """
+    Преобразует текстовые формулы в формат LaTeX.
+
+    :param input_text: Обычный текст с формулами
+    :return: Текст с формулами в формате LaTeX
+    """
     try:
-        expression = preprocess_expression(expression)
-        parsed_expr = parse_expr(expression, transformations=transformations)
-        latex_expr = latex(parsed_expr)
-        if not latex_expr.strip().startswith("\\begin{array}"):
-            latex_expr = f"\\begin{{equation}}\n{latex_expr}\n\\end{{equation}}"
-        return latex_expr
+        transformations = [
+            (r'\b([a-zA-Z])\^2\b', r'\1^2'),  # x^2 -> x^2
+            (r'\b([a-zA-Z])_([a-zA-Z0-9]+)\b', r'\1_\2'),  # x_1 -> x_1
+            (r'\bsqrt\(([a-zA-Z0-9+\-*/^ ]+)\)', r'\\sqrt{\1}'),  # sqrt(x) -> \sqrt{x}
+            (r'\b([a-zA-Z]+)\(([a-zA-Z0-9+\-*/^ ]+)\)', r'\1(\2)'),  # sin(x) -> sin(x)
+            (r'\b([0-9]+)\*([a-zA-Z])\b', r'\1 \\cdot \2'),  # 2*x -> 2 \cdot x
+            (r'\b([a-zA-Z0-9]+)\s*\*\s*([a-zA-Z0-9]+)\b', r'\1 \\cdot \2'),  # x * y -> x \cdot y
+            (r'([0-9]+)\^([0-9]+)', r'\1^{\2}'),  # 2^3 -> 2^{3}
+            (r'\b([0-9]+)\s*/\s*([0-9]+)\b', r'\\frac{\1}{\2}'),  # 2/3 -> \frac{2}{3}
+            (r'\b([a-zA-Z]+)\s*/\s*([a-zA-Z]+)\b', r'\\frac{\1}{\2}'),  # x/y -> \frac{x}{y}
+            (r'\b([a-zA-Z0-9]+)\s*\+\s*([a-zA-Z0-9]+)\b', r'\1 + \2'),  # x + y -> x + y
+            (r'\b([a-zA-Z0-9]+)\s*-\s*([a-zA-Z0-9]+)\b', r'\1 - \2'),  # x - y -> x - y
+            (r'\b([a-zA-Z])\s*=\s*([a-zA-Z0-9+\-*/^ ]+)\b', r'\1 = \2'),  # x = y -> x = y
+            (r'\bintegral\s*\(([a-zA-Z0-9+\-*/^ ]+)\)\s*d([a-zA-Z])', r'\\int {\1} \, d\2'),  # integral(f(x)) dx -> \int {f(x)} \, dx
+            (r'\bsum\s*\(([a-zA-Z0-9+\-*/^ ]+),([a-zA-Z0-9]+)=([a-zA-Z0-9]+)\.\.([a-zA-Z0-9]+)\)', r'\\sum_{\2=\3}^{\4} {\1}'),  # sum(f(x), i=1..n) -> \sum_{i=1}^{n} {f(x)}
+            (r'\blim\s*\(([a-zA-Z0-9+\-*/^ ]+),\s*([a-zA-Z0-9]+)->([a-zA-Z0-9]+)\)', r'\\lim_{\2 \to \3} {\1}'),  # lim(f(x), x->a) -> \lim_{x \to a} {f(x)}
+            (r'\bpartial\s*\(([a-zA-Z0-9+\-*/^ ]+),\s*([a-zA-Z])\)', r'\\frac{\\partial}{\\partial \2} {\1}'),  # partial(f(x), x) -> \frac{\partial}{\partial x} {f(x)}
+        ]
+
+        latex_text = input_text
+        for pattern, replacement in transformations:
+            latex_text = re.sub(pattern, replacement, latex_text)
+        latex_text = f"\\begin{{equation}}\n{latex_text}\n\\end{{equation}}"
+        return latex_text
     except Exception as e:
-        return f"Ошибка при обработке выражения: {e}"
+        print("Ошибка при преобразовании текста в LaTeX:", str(e))
+        return None
+
 
 def index(request):
     return render(request, 'main/index.html')
@@ -83,7 +108,7 @@ def texttolatex(request):
     if request.method == "POST":
         form = TextInputForm(request.POST)
         if form.is_valid():
-            text = to_latex(form.cleaned_data['text'])
+            text = text_to_latex(form.cleaned_data['text'])
     else:
         form = TextInputForm()
     return render(request, 'main/texttolatex.html', {'form': form, 'text': text})
