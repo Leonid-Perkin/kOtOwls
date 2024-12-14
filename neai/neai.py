@@ -40,7 +40,6 @@ def check_formula_uniqueness(input_formula, connection):
     print(f"Легенда для наиболее схожей формулы: {most_similar_legend}")
     print(f"Легенда: Формула, наиболее схожая с введенной, имеет коэффициент сходства {max_similarity * 100:.2f}% и является наиболее вероятным кандидатом на повторение.")
     return 0
-
 input_formula = r"\frac{d}{dt} \left( \frac{1}{2} m*1 v^2 \right)"
 try:
     connection = connect_to_db()

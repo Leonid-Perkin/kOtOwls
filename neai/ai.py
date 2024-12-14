@@ -2,15 +2,12 @@ import difflib
 import sqlite3
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-
 tokenizer = AutoTokenizer.from_pretrained("./formula_similarity_model")
 model = AutoModelForSequenceClassification.from_pretrained("./formula_similarity_model")
-
 def connect_to_db():
     """Подключение к базе данных SQLite"""
     connection = sqlite3.connect('formulas.db')
     return connection
-
 def fetch_formulas(connection):
     """Извлекает формулы и их легенды из базы данных SQLite"""
     cursor = connection.cursor()
@@ -18,12 +15,10 @@ def fetch_formulas(connection):
     formulas = [(row[0], row[1]) for row in cursor.fetchall()]
     cursor.close()
     return formulas
-
 def compare_formulas(formula1, formula2):
     """Сравнивает две формулы и возвращает коэффициент сходства с помощью difflib"""
     similarity = difflib.SequenceMatcher(None, formula1, formula2).ratio()
     return similarity
-
 def neural_network_similarity(formula1, formula2):
     """Использует нейросеть для вычисления сходства между формулами"""
     inputs = tokenizer([formula1, formula2], return_tensors="pt", padding=True, truncation=True)
@@ -33,9 +28,6 @@ def neural_network_similarity(formula1, formula2):
         similarity_score = probabilities.max().item()
         
     return similarity_score
-
-
-
 def check_formula_uniqueness(input_formula, connection):
     """Проверяет уникальность формулы"""
     formulas = fetch_formulas(connection)
@@ -63,8 +55,6 @@ def check_formula_uniqueness(input_formula, connection):
     print(f"Формула, наиболее похожая (difflib): {most_similar_formula_difflib}")
     print(f"Метод нейросети - Максимальное сходство: {max_similarity_nn * 100:.2f}%")
     return 0
-
-# Пример использования
 input_formula = r"\frac{d}{dt} \left( \frac{1}{2} m*1 v^2 \right)"
 try:
     connection = connect_to_db()
