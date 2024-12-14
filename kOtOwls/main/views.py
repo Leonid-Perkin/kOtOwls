@@ -59,7 +59,6 @@ def to_latex(expression):
         return f"Ошибка при обработке выражения: {e}"
 
 def index(request):
-    pass
     return render(request, 'main/index.html')
 
 def phototolatex(request):
@@ -88,3 +87,6 @@ def texttolatex(request):
     else:
         form = TextInputForm()
     return render(request, 'main/texttolatex.html', {'form': form, 'text': text})
+
+def team(request):
+    return render(request,'main/team.html')
