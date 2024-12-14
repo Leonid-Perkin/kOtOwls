@@ -30,5 +30,9 @@
     {
         "id": 8,
         "formula": "sqrt(x**2 + y**2)"
+    },
+    {
+        "id": 9,
+        "formula": "x*y+1"
     }
 ]
