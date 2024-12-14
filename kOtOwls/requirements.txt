@@ -1,0 +1,10 @@
+pix2tex
+Pillow
+pydantic
+matplotlib
+sympy
+django
+requests 
+beautifulsoup4
+PyMuPDF
+numpy
