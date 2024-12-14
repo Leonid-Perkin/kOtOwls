@@ -1,43 +1,53 @@
 import difflib
+import sqlite3
 
-# Функция для чтения формул из текстового файла
-def read_formulas(file_path):
-    with open(file_path, 'r') as file:
-        formulas = file.readlines()
-    return [formula.strip() for formula in formulas if formula.strip()]
+def connect_to_db():
+    """Подключение к базе данных SQLite"""
+    connection = sqlite3.connect('formulas.db')
+    return connection
 
-# Функция для вычисления сходства между двумя строками с использованием difflib
+def fetch_formulas(connection):
+    """Извлекает формулы и их легенды из базы данных SQLite"""
+    cursor = connection.cursor()
+    cursor.execute("SELECT formula, legend FROM formulas")
+    formulas = [(row[0], row[1]) for row in cursor.fetchall()]
+    cursor.close()
+    return formulas
+
 def compare_formulas(formula1, formula2):
-    # Используем метод SequenceMatcher для оценки сходства строк
+    """Сравнивает две формулы и возвращает коэффициент сходства"""
     similarity = difflib.SequenceMatcher(None, formula1, formula2).ratio()
     return similarity
 
-# Основная функция для проверки оригинальности формул
-def check_formula_uniqueness(input_formula, formulas_file):
-    formulas = read_formulas(formulas_file)
-    
-    # Пройдемся по всем формулам и сравним с входной
-    similarities = []
-    for formula in formulas:
+def check_formula_uniqueness(input_formula, connection):
+    """Проверяет уникальность формулы"""
+    formulas = fetch_formulas(connection)
+    for formula, _ in formulas:
+        if input_formula.strip() == formula.strip():
+            print("Формула уже существует в базе данных. Оригинальность: 0.")
+            return 0
+    max_similarity = 0
+    most_similar_formula = None
+    most_similar_legend = None
+    for formula, legend in formulas:
         similarity = compare_formulas(input_formula, formula)
-        similarities.append((formula, similarity))
-    
-    # Выведем все результаты
-    print("Сравнение формулы:")
-    for formula, similarity in similarities:
-        print(f"Формула: {formula}")
-        print(f"Сходство: {similarity * 100:.2f}%")
-        print("-" * 40)
-    
-    # Определим, является ли формула уникальной (например, если сходство < 80%)
-    non_unique_formulas = [formula for formula, similarity in similarities if similarity > 0.8]
-    if non_unique_formulas:
-        print("Найдено схожие формулы. Возможно, они не уникальны.")
-    else:
-        print("Формула уникальна!")
+        if similarity > max_similarity:
+            max_similarity = similarity
+            most_similar_formula = formula
+            most_similar_legend = legend
+    print(f"Максимальное сходство: {max_similarity * 100:.2f}%")
+    print(f"Максимально совпадающая формула: {most_similar_formula}")
+    print(f"Легенда для наиболее схожей формулы: {most_similar_legend}")
+    print(f"Легенда: Формула, наиболее схожая с введенной, имеет коэффициент сходства {max_similarity * 100:.2f}% и является наиболее вероятным кандидатом на повторение.")
+    return 0
 
-# Пример использования
-input_formula = r"\frac{d}{dt} \left( \frac{1}{2} m v^2 \right)"  # Входная формула
-formulas_file = 'formulas.txt'  # Путь к файлу с формулами
-
-check_formula_uniqueness(input_formula, formulas_file)
+input_formula = r"\frac{d}{dt} \left( \frac{1}{2} m*1 v^2 \right)"
+try:
+    connection = connect_to_db()
+    check_formula_uniqueness(input_formula, connection)
+    
+except sqlite3.Error as err:
+    print(f"Ошибка подключения к базе данных: {err}")
+finally:
+    if connection:
+        connection.close()
