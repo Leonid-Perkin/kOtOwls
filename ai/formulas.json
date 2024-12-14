@@ -1,0 +1,6 @@
+formulas = [
+    {"id": 1, "latex": "E = mc^2"},
+    {"id": 2, "latex": "\\int_a^b f(x) \\, dx = F(b) - F(a)"},
+    {"id": 3, "latex": "F = ma"},
+    # Добавьте больше формул
+]

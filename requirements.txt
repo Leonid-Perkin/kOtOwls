@@ -7,3 +7,5 @@ django
 requests 
 beautifulsoup4
 PyMuPDF
+tensorflow
+numpy
