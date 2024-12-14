@@ -1,6 +1,34 @@
-formulas = [
-    {"id": 1, "latex": "E = mc^2"},
-    {"id": 2, "latex": "\\int_a^b f(x) \\, dx = F(b) - F(a)"},
-    {"id": 3, "latex": "F = ma"},
-    # Добавьте больше формул
+[
+    {
+        "id": 1,
+        "formula": "a**2 + b**2"
+    },
+    {
+        "id": 2,
+        "formula": "x**2 + y**2"
+    },
+    {
+        "id": 3,
+        "formula": "a + b"
+    },
+    {
+        "id": 4,
+        "formula": "x + y"
+    },
+    {
+        "id": 5,
+        "formula": "a * b"
+    },
+    {
+        "id": 6,
+        "formula": "x * y"
+    },
+    {
+        "id": 7,
+        "formula": "sqrt(a**2 + b**2)"
+    },
+    {
+        "id": 8,
+        "formula": "sqrt(x**2 + y**2)"
+    }
 ]
