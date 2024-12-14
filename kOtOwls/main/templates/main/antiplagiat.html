@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% load static %}
 <html lang="ru">
 <head>
@@ -16,8 +15,8 @@
         <h1>Введите ваш текст</h1>
         <form method="POST" class="input-form" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Отправить</button>
+            {{ form1.as_p }}
+            <button type="submit" name="submit_text">Отправить</button>
         </form>
         {% if text %}
         <div class="output-text">
@@ -31,7 +30,7 @@
         <form method="POST" class="input-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Отправить</button>
+            <button type="submit" name="submit_image">Отправить</button>
         </form>
         {% if image_url %}
         <div class="image-output">
@@ -42,28 +41,6 @@
         {% if latex_text %}
         <div class="latex-formula">
             <p>Latex: {{ latex_text }}</p>
-        </div>
-        {% endif %}
-
-        <!-- Блок для отображения результатов проверки оригинальности -->
-        {% if max_similarity_difflib and max_similarity_nn %}
-        <div class="similarity-output">
-            <h2>Результаты проверки оригинальности:</h2>
-            <p><strong>Метод difflib - Максимальное сходство:</strong> {{ max_similarity_difflib|floatformat:2 }}%</p>
-            <p><strong>Формула, наиболее похожая (difflib):</strong> {{ most_similar_formula_difflib }}</p>
-            <p><strong>Метод нейросети - Максимальное сходство:</strong> {{ max_similarity_nn|floatformat:2 }}%</p>
-            <div class="similarity-bar">
-                <p><strong>Процент сходства (difflib):</strong> {{ max_similarity_difflib|floatformat:2 }}%</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: {{ max_similarity_difflib }}%;"></div>
-                </div>
-            </div>
-            <div class="similarity-bar">
-                <p><strong>Процент сходства (нейросеть):</strong> {{ max_similarity_nn|floatformat:2 }}%</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: {{ max_similarity_nn }}%;"></div>
-                </div>
-            </div>
         </div>
         {% endif %}
 

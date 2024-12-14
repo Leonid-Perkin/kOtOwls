@@ -117,4 +117,36 @@ def team(request):
     return render(request,'main/team.html')
 
 def antiplagiat(request):
-    return render(request,'main/antiplagiat.html')
+    latex_text = None
+    image_url = None
+    text = None
+    
+    # Обработка формы для загрузки изображения
+    if request.method == "POST" and 'submit_image' in request.POST:
+        form = PhotoInputForm(request.POST, request.FILES)
+        if form.is_valid():
+            if 'image' in request.FILES:
+                image = request.FILES['image']
+                fs = FileSystemStorage()
+                filename = fs.save(image.name, image)
+                image_url = fs.url(filename)
+                file_path = os.path.join(fs.location, filename)
+                latex_text = extract_latex_from_image(file_path)
+    else:
+        form = PhotoInputForm()
+
+    # Обработка формы для ввода текста
+    if request.method == "POST" and 'submit_text' in request.POST:
+        form1 = TextInputForm(request.POST)
+        if form1.is_valid():
+            text = text_to_latex(form1.cleaned_data['text'])
+    else:
+        form1 = TextInputForm()
+
+    return render(request, 'main/antiplagiat.html', {
+        'form': form,
+        'form1': form1,
+        'latex_text': latex_text,
+        'image_url': image_url,
+        'text': text
+    })
