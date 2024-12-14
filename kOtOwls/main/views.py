@@ -90,3 +90,6 @@ def texttolatex(request):
 
 def team(request):
     return render(request,'main/team.html')
+
+def antiplagiat(request):
+    return render(request,'main/antiplagiat.html')
