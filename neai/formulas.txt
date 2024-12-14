@@ -1,0 +1,4 @@
+\frac{d}{dt} \left( \frac{1}{2} m v^2 \right)
+E = mc^2
+F = ma
+\int_a^b f(x) dx
