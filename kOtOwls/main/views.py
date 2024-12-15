@@ -161,6 +161,43 @@ def text_to_latex(input_text):
     except Exception as e:
         print("Ошибка при преобразовании текста в LaTeX:", str(e))
         return None
+    
+def latex_to_text(input_latex):
+    """
+    Преобразует LaTeX формулы в обычный текст.
+
+    :param input_latex: Текст в формате LaTeX
+    :return: Обычный текст с формулами
+    """
+    try:
+        transformations = [
+            (r'\\frac\{([a-zA-Z0-9+\-*/^ ]+)\}\{([a-zA-Z0-9+\-*/^ ]+)\}', r'\1/\2'),  # \frac{2}{3} -> 2/3
+            (r'\\int\s*\{([a-zA-Z0-9+\-*/^ ]+)\}\s*\\,?\s*d([a-zA-Z])', r'integral(\1) d\2'),  # \int {f(x)} \, dx -> integral(f(x)) dx
+            (r'\\sum\_\{([a-zA-Z0-9]+)=([a-zA-Z0-9]+)\}\^\{([a-zA-Z0-9]+)\}\s*\{([a-zA-Z0-9+\-*/^ ]+)\}', 
+             r'sum(\4, \2=\3..\1)'),  # \sum_{i=1}^{n} {f(x)} -> sum(f(x), i=1..n)
+            (r'\\lim\_\{([a-zA-Z0-9]+)\s*\\to\s*([a-zA-Z0-9]+)\}\s*\{([a-zA-Z0-9+\-*/^ ]+)\}', 
+             r'lim(\3, \1->\2)'),  # \lim_{x \to a} {f(x)} -> lim(f(x), x->a)
+            (r'\\frac\{\\partial\}\{\\partial\s*([a-zA-Z])\}\s*\{([a-zA-Z0-9+\-*/^ ]+)\}', 
+             r'partial(\2, \1)'),  # \frac{\partial}{\partial x} {f(x)} -> partial(f(x), x)
+            (r'\\sqrt\{([a-zA-Z0-9+\-*/^ ]+)\}', r'sqrt(\1)'),  # \sqrt{x} -> sqrt(x)
+            (r'([a-zA-Z0-9]+)\s*\\cdot\s*([a-zA-Z0-9]+)', r'\1*\2'),  # x \cdot y -> x * y
+            (r'([a-zA-Z]+)\^2', r'\1^2'),  # x^2 -> x^2
+            (r'([a-zA-Z]+)\s*\_\s*([a-zA-Z0-9]+)', r'\1_\2'),  # x_1 -> x_1
+            (r'([a-zA-Z]+)\s*=\s*([a-zA-Z0-9+\-*/^ ]+)', r'\1 = \2'),  # x = y -> x = y
+        ]
+        
+        text = input_latex
+        for pattern, replacement in transformations:
+            text = re.sub(pattern, replacement, text)
+        
+        # Удаляем LaTeX-среду для уравнений
+        text = re.sub(r'\\begin\{equation\}\n*', '', text)
+        text = re.sub(r'\n*\\end\{equation\}', '', text)
+        
+        return text
+    except Exception as e:
+        print("Ошибка при преобразовании LaTeX в текст:", str(e))
+        return None
 
 
 def index(request):
@@ -242,3 +279,13 @@ def antiplagiat(request):
         'text': text,
         'results': results
     })
+
+def latextotext(request):
+    text = None
+    if request.method == "POST":
+        form = TextInputForm(request.POST)
+        if form.is_valid():
+            text = latex_to_text(form.cleaned_data['text'])
+    else:
+        form = TextInputForm()
+    return render(request, 'main/latextotext.html', {'form': form, 'text': text})
