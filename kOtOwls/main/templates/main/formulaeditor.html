@@ -20,6 +20,14 @@
             padding: 10px;
             font-size: 16px;
         }
+        .main-content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
 
         #formula {
             border: 1px solid #ccc;
@@ -37,6 +45,7 @@
 </head>
 <body>
     {% include 'main/headermenu.html'%}
+    <div class="main-content">
     <h1>LaTeX Редактор формул</h1>
     <div id="formula" contenteditable="true"></div>
     <div class="keyboard">
@@ -91,5 +100,6 @@
     <form style="display: none;">
         {% csrf_token %}
     </form>
+    </div>
 </body>
 </html>
