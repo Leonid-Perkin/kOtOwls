@@ -11,7 +11,7 @@
 <body>
     {% include 'main/headermenu.html'%}
     <div class="main-content">
-        <h1>Введите ваш текст</h1>
+        <h1>Введите вашу формулу в latex</h1>
         <form method="POST" class="input-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
@@ -19,7 +19,7 @@
         </form>
         {% if text %}
         <div class="output-text">
-            <h2>Вы ввели:</h2>
+            <h2>Текст из Формулы</h2>
             <p>{{ text }}</p>
         </div>
         {% endif %}

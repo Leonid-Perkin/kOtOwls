@@ -12,7 +12,7 @@
     <div class="main-content">
 
         <!-- Форма для ввода текста -->
-        <h1>Введите ваш текст</h1>
+        <h1>Введите вашу формулу</h1>
         <form method="POST" class="input-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form1.as_p }}
@@ -20,13 +20,13 @@
         </form>
         {% if text %}
         <div class="output-text">
-            <h2>Вы ввели:</h2>
+            <h2>Формула в Latex:</h2>
             <p>{{ text }}</p>
         </div>
         {% endif %}
 
         <!-- Форма для загрузки изображения -->
-        <h1>Загрузите ваше фото</h1>
+        <h1>Загрузите ваше фото с формулой</h1>
         <form method="POST" class="input-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
