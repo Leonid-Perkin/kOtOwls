@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kOtOwls</title>
+    <script src="{% static 'main/ajax/jquery.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'main/ajax/mathquill.min.css' %}">
+    <script src="{% static 'main/ajax/mathquill.min.js' %}"></script>
+    <script id="MathJax-script" async src="{% static 'main/mathJax/tex-chtml.js' %}"></script>
+    {% include 'main/stylehtm.html'%}
+    <style>
+        .keyboard {
+            margin-top: 20px;
+        }
+
+        .keyboard button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #formula {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 50px;
+        }
+
+        #saved-formula {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    {% include 'main/headermenu.html'%}
+    <h1>LaTeX Редактор формул</h1>
+    <div id="formula" contenteditable="true"></div>
+    <div class="keyboard">
+        <button onclick="insertMath('\\frac{}{}')">Fraction</button>
+        <button onclick="insertMath('\\sqrt{}')">Square Root</button>
+        <button onclick="insertMath('\\sin()')">Sin</button>
+        <button onclick="insertMath('\\cos()')">Cos</button>
+        <button onclick="insertMath('\\tan()')">Tan</button>
+        <button onclick="insertMath('\\int')">Integral</button>
+        <button onclick="insertMath('\\sum_{}^{}')">Summation</button>
+        <button onclick="insertMath('\\prod_{}^{}')">Product</button>
+        <button onclick="insertMath('\\log_{}')">Logarithm</button>
+        <button onclick="insertMath('\\lim_{}')">Limit</button>
+        <button onclick="insertMath('\\alpha')">Alpha</button>
+        <button onclick="insertMath('\\beta')">Beta</button>
+        <button onclick="insertMath('\\gamma')">Gamma</button>
+        <button onclick="insertMath('\\pi')">Pi</button>
+        <button onclick="insertMath('\\theta')">Theta</button>
+        <button onclick="insertMath('\\infty')">Infinity</button>
+    </div>
+    <button id="save">Save Formula</button>
+
+    <div id="saved-formula">
+        <h2>Saved Formula</h2>
+        <div id="rendered-formula"></div>
+    </div>
+
+    <script>
+        const MQ = MathQuill.getInterface(2);
+        const mathField = MQ.MathField(document.getElementById('formula'));
+
+        function insertMath(latex) {
+            mathField.write(latex);
+            mathField.focus();
+        }
+
+        $('#save').on('click', function() {
+            const formula = mathField.latex();
+            const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+            $.post('/save/', { formula: formula, csrfmiddlewaretoken: csrfToken }, function(response) {
+                if (response.status === 'success') {
+                    alert('Formula saved: ' + response.formula);
+                } else {
+                    alert('Error saving formula');
+                }
+            });
+            const renderedFormula = document.getElementById('rendered-formula');
+            renderedFormula.textContent = `\\[${formula}\\]`;
+            MathJax.typesetPromise([renderedFormula]);
+        });
+    </script>
+    <form style="display: none;">
+        {% csrf_token %}
+    </form>
+</body>
+</html>
