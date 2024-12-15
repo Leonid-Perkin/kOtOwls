@@ -253,6 +253,8 @@ def antiplagiat(request):
                 results = check_formula_uniqueness(latex_text, connection)
                 if connection:
                     connection.close()
+                if latex_text:
+                    save_formula_to_db(latex_text)
     else:
         form = PhotoInputForm()
 
