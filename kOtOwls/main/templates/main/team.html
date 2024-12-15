@@ -6,6 +6,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kOtOwls</title>
     {% include 'main/stylehtm.html' %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .main-content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #6997CB;
+        }
+
+        .output-text {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+
+        .output-text img {
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+
+        .output-text h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .output-text h3 {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            .output-text {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .output-text img {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     {% include 'main/headermenu.html' %}
@@ -15,20 +74,25 @@
         <h1> О команде </h1>
         
         <div class="output-text">
-            <img src=".jpg" width="150" align="right">
-            <h2> Перкин Леонид </h2>
-            <h3> Возраст: </h3> 18 лет
-            <h3> ВУЗ: </h3> РТУ МИРЭА
-            <h3> О себе: </h3>
+            <img src="{% static 'main/images/ava2.jpg' %}" width="150" alt="Перкин Леонид">
+            <div>
+                <h2> Перкин Леонид </h2>
+                <h3> Возраст: </h3> 18 лет
+                <h3> ВУЗ: </h3> РТУ МИРЭА
+                <h3> О себе: </h3>
+                <p>Увлекаюсь созданием различных IoT-устройств и разработкой backend-решений. До участия в хакатоне MIRE/A\TOM принимал участие в научно-техническом конкурсе "Большие вызовы" (Сириус) по кейсу от Росатома: "Система управления центрами обработки данных с нейтральным климатическим следом". Считаю хакатоны отличной возможностью для приобретения нового опыта и профессионального развития.</p>
+            </div>
         </div>
 
         <div class="output-text">
-            <img src="{% static 'main/images/ava1.jpg' %}" width="150" align="right">
-            <h2> Тишина Елизавета </h2>
-            <h3> Возраст: </h3> 18 лет
-            <h3> ВУЗ: </h3> РТУ МИРЭА
-            <h3> О себе: </h3> 
-            Увлекаюсь графическим дизайном и интересуюсь веб-разработкой. До Xакатона MIRE/A\TOM не было опыта участия в подобных проектах. Считаю, Хакатон отличной возможностью развития своего потенциала. Из названия команды идея нашего логотипа возникла сама собой.
+            <img src="{% static 'main/images/ava1.jpg' %}" width="150" alt="Тишина Елизавета">
+            <div>
+                <h2> Тишина Елизавета </h2>
+                <h3> Возраст: </h3> 18 лет
+                <h3> ВУЗ: </h3> РТУ МИРЭА
+                <h3> О себе: </h3>
+                <p>Увлекаюсь графическим дизайном и интересуюсь веб-разработкой. До Хакатона MIRE/A\TOM не было опыта участия в подобных проектах. Считаю, Хакатон отличной возможностью развития своего потенциала. Из названия команды идея нашего логотипа возникла сама собой.</p>
+            </div>
         </div>
     </div>
 </body>
