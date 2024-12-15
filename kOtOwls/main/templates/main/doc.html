@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация для views.py</title>
+    {% include 'main/stylehtm.html' %}
+    {% include 'main/headermenu.html' %}
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #f4f4f4; color: #333;">
+    <div style="background-color: #333; color: #fff; padding: 10px 0; text-align: center;">
+        <h1 style="margin-bottom: 10px;">Документация для views.py</h1>
+        <nav>
+            <ul style="list-style-type: none; text-align: center; padding: 0;">
+                <li style="display: inline; margin: 0 10px;"><a href="#overview" style="color: #fff; text-decoration: none; font-weight: bold;">Обзор</a></li>
+                <li style="display: inline; margin: 0 10px;"><a href="#functions" style="color: #fff; text-decoration: none; font-weight: bold;">Функции</a></li>
+                <li style="display: inline; margin: 0 10px;"><a href="#usage" style="color: #fff; text-decoration: none; font-weight: bold;">Применение</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <section id="overview" style="margin-bottom: 20px;">
+        <h2 style="background-color: #007BFF; color: white; padding: 5px; text-align: center;">Обзор</h2>
+        <p>Этот файл содержит несколько функций для обработки формул и изображений с использованием OCR и LaTeX. В нем также реализованы механизмы для сохранения формул в базу данных и проверки их уникальности с помощью алгоритмов сравнения и модели искусственного интеллекта.</p>
+    </section>
+
+    <section id="functions" style="margin-bottom: 20px;">
+        <h2 style="background-color: #007BFF; color: white; padding: 5px; text-align: center;">Функции</h2>
+
+        <h3 style="color: #007BFF;">connect_to_db</h3>
+        <p>Устанавливает соединение с базой данных SQLite.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Establishes a connection to the SQLite database.
+        
+            Returns:
+                sqlite3.Connection: A connection object to the SQLite database.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">save_formula_to_db</h3>
+        <p>Сохраняет формулу LaTeX в базу данных.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Saves a LaTeX formula to the database.
+        
+            Args:
+                formula (str): The LaTeX formula to save.
+                legend (str): The legend of the formula.
+        
+            Returns:
+                bool: True if the formula was saved successfully, False otherwise.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">fetch_formulas</h3>
+        <p>Извлекает формулы и их легенды из базы данных.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Fetches formulas and their legends from the database.
+        
+            Returns:
+                list: A list of tuples containing the formula and its legend.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">compare_formulas</h3>
+        <p>Сравнивает две формулы, используя алгоритм difflib, и возвращает коэффициент схожести.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Compares two formulas using the difflib algorithm and returns the similarity coefficient.
+        
+            Args:
+                formula1 (str): The first formula to compare.
+                formula2 (str): The second formula to compare.
+        
+            Returns:
+                float: The similarity coefficient between the two formulas.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">neural_network_similarity</h3>
+        <p>Использует нейросеть для вычисления схожести между двумя формулами.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Uses a neural network to compute the similarity between two formulas.
+        
+            Args:
+                formula1 (str): The first formula to compare.
+                formula2 (str): The second formula to compare.
+        
+            Returns:
+                float: The similarity coefficient between the two formulas.
+            """
+            </pre>
+        </code>
+
+
+        <h3 style="color: #007BFF;">check_formula_uniqueness</h3>
+        <p>Проверяет уникальность формулы, сравнивая ее с существующими формулами в базе данных.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Checks the uniqueness of a formula by comparing it with existing formulas in the database.
+        
+            Args:
+                formula (str): The formula to check for uniqueness.
+        
+            Returns:
+                bool: True if the formula is unique, False otherwise.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">extract_latex_from_image</h3>
+        <p>Извлекает формулу LaTeX из изображения с помощью OCR.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Extracts LaTeX formula from an image using OCR.
+        
+            Args:
+                image_path (str): The path to the image file.
+        
+            Returns:
+                str: The LaTeX formula extracted from the image.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">text_to_latex</h3>
+        <p>Преобразует текстовое математическое выражение в формат LaTeX.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Converts a text mathematical expression to LaTeX format.
+        
+            Args:
+                text (str): The text mathematical expression to convert.
+        
+            Returns:
+                str: The LaTeX representation of the text expression.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">latex_to_text</h3>
+        <p>Преобразует строку LaTeX в обычный текстовый формат.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Converts a LaTeX string to plain text format.
+        
+            Args:
+                latex (str): The LaTeX string to convert.
+        
+            Returns:
+                str: The plain text representation of the LaTeX string.
+            """
+            </pre>
+        </code>
+        <h3 style="color: #007BFF;">index</h3>
+        <p>Обрабатывает запрос на главную страницу и отображает шаблон.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Handles a request to the home page and renders the template.
+        
+            Args:
+                request (HttpRequest): The HTTP request object.
+        
+            Returns:
+                HttpResponse: The HTTP response object.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">phototolatex</h3>
+        <p>Обрабатывает запросы для преобразования изображений в формулы LaTeX.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            """
+            Handles requests for converting images to LaTeX formulas.
+        
+            Args:
+                request (HttpRequest): The HTTP request object.
+        
+            Returns:
+                HttpResponse: The HTTP response object.
+            """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">texttolatex</h3>
+        <p>Обрабатывает форму для преобразования текста в LaTeX.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+                """
+                Handles a form for converting text to LaTeX.
+
+                Args:
+                    request (HttpRequest): The HTTP request object.
+
+                Returns:
+                    HttpResponse: The HTTP response object.
+                """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">team</h3>
+        <p>Обрабатывает запросы для отображения страницы команды.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+                """
+                Handles requests for displaying the team page.
+
+                Args:
+                    request (HttpRequest): The HTTP request object.
+
+                Returns:
+                    HttpResponse: The HTTP response object.
+                """
+            </pre>
+        </code>
+
+        <h3 style="color: #007BFF;">antiplagiat</h3>
+        <p>Обрабатывает функции анти-плагиата, включая загрузку изображений и проверку уникальности формул.</p>
+        <code>
+            <pre style="background-color: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto;">
+                """
+                Handles anti-plagiarism functions, including image upload and formula uniqueness checking.
+
+                Args:
+                    request (HttpRequest): The HTTP request object.
+
+                Returns:
+                    HttpResponse: The HTTP response object.
+                """
+            </pre>
+        </code>
+
+    </section>
+
+    <section id="usage" style="margin-bottom: 20px;">
+        <h2 style="background-color: #007BFF; color: white; padding: 5px; text-align: center;">Применение</h2>
+        <p>Файл <code>views.py</code> используется в приложении Django для работы с математическими формулами, их сохранением в базу данных и проверкой на уникальность с помощью различных методов, включая нейросети и алгоритмы сравнения строк.</p>
+    </section>
+
+    <footer style="text-align: center; margin-top: 20px; font-size: 0.8em; color: #888;">
+        <p>Документация © 2024</p>
+    </footer>
+</body>
+</html>
