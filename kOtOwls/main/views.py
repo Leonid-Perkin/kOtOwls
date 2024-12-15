@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .forms import *
-
+from django.http import JsonResponse
 import os
 from PIL import Image
 from pix2tex.cli import LatexOCR
@@ -445,3 +445,37 @@ def doc(request):
         HttpResponse: The rendered HTML page for the documentation.
     """
     return render(request,'main/doc.html')
+def formulaeditor(request):
+    """
+    Handles the request to render the formula editor page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered formula editor HTML page.
+    """
+    return render(request,'main/formulaeditor.html')
+def save_formula(request):
+    """
+    Handle the saving of a formula from a POST request.
+
+    This view function processes a POST request containing a formula,
+    saves the formula to the database if provided, and returns a JSON response
+    indicating success or failure.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        JsonResponse: A JSON response with the status of the operation.
+                      If successful, includes the saved formula.
+                      If the request method is not POST or no formula is provided,
+                      returns an error status.
+    """
+    if request.method == 'POST':
+        formula = request.POST.get('formula', '')
+        if formula:
+                save_formula_to_db(formula)
+        return JsonResponse({'status': 'success', 'formula': formula})
+    return JsonResponse({'status': 'error'}, status=400)
